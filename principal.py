@@ -162,13 +162,22 @@ def audio_original():
 def audio_procesado():
     return FileResponse(RUTA_PROCESADO, media_type="audio/wav")
 
+
 @app.get("/spectrograma-original")
 def spectrograma_original():
-    return FileResponse(RUTA_SPECTRO_ORIGINAL, media_type="image/png")
+    try:
+        generar_spectrograma_si_no_existe(RUTA_ORIGINAL, RUTA_SPECTRO_ORIGINAL)
+        return FileResponse(RUTA_SPECTRO_ORIGINAL, media_type="image/png")
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
 @app.get("/spectrograma-procesado")
 def spectrograma_procesado():
-    return FileResponse(RUTA_SPECTRO_PROCESADO, media_type="image/png")
+    try:
+        generar_spectrograma_si_no_existe(RUTA_PROCESADO, RUTA_SPECTRO_PROCESADO)
+        return FileResponse(RUTA_SPECTRO_PROCESADO, media_type="image/png")
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
 @app.get("/datos-spectrograma-original")
 def datos_spectrograma_original():
