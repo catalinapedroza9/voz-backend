@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile, Form
+from fastapi.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 import os
@@ -146,6 +147,9 @@ async def reiniciar():
         return {"mensaje": "Ecualizador reiniciado correctamente."}
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+@app.get("/favicon.ico")
+async def favicon():
+    return Response(content="", media_type="image/x-icon")
 @app.get("/")
 def root():
     return {"mensaje": "🎛️ Backend del ecualizador de voz activo."}
