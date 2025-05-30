@@ -146,6 +146,9 @@ async def reiniciar():
         return {"mensaje": "Ecualizador reiniciado correctamente."}
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+@app.get("/")
+def root():
+    return {"mensaje": "🎛️ Backend del ecualizador de voz activo."}
 
 @app.get("/audio-original")
 def audio_original():
